@@ -1,0 +1,43 @@
+{
+"Planta":
+    {
+    "Capacidad" : 500.00,
+    "": "",
+    "": "",
+    "":""
+    },
+"Sensores":
+    [
+        {
+	"Canton" : "Los angeles",
+	"Distrito": "",
+	"Barrio" : "",
+	"Capacidad" : 20.00
+        },
+        {
+        "Canton" : "La union",
+	"Distrito": "tres ríos",
+	"Barrio" : "San juan",
+	"Capacidad" : 10.00
+        },
+	{
+	"Canton" : "Turrialba",
+	"Distrito": "Pavones",
+	"Barrio" : "",
+	"Capacidad" : 20.00
+	},
+	{
+	"Canton" : "Paraiso",
+	"Distrito": "Orosi",
+	"Barrio" : "",
+	"Capacidad" : 20.00
+	},
+	{
+	"Canton" : "San Ramon",
+	"Distrito": "Piedades Sur",
+	"Barrio" : "La Guaria",
+	"Capacidad" : 20.00
+	}
+    ]
+}
+ 

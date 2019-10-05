@@ -5,17 +5,36 @@
  */
 package caso10;
 
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
+import javax.swing.WindowConstants;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeCellRenderer;
+
 /**
  *
  * @author sande
  */
 public class SistemaTuverias extends javax.swing.JFrame {
-
     /**
      * Creates new form SistemaTuverias
      */
     public SistemaTuverias() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+//       this.jTree1.t
+        
+       DefaultTreeCellRenderer render= (DefaultTreeCellRenderer)jTree1.getCellRenderer();
+        render.setLeafIcon(new ImageIcon("d:/Tuveria.png"));
+        render.setOpenIcon(new ImageIcon("d:/Tuveria.png"));
+        render.setClosedIcon(new ImageIcon("d:/Tuveria.png"));
+        
+        //initComponents();
     }
 
     /**
@@ -27,17 +46,31 @@ public class SistemaTuverias extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTree1 = new javax.swing.JTree();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTree1.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        jTree1.setDoubleBuffered(true);
+        jTree1.setToggleClickCount(1);
+        jScrollPane1.setViewportView(jTree1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 882, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 786, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 547, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         pack();
@@ -79,5 +112,7 @@ public class SistemaTuverias extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTree jTree1;
     // End of variables declaration//GEN-END:variables
 }
