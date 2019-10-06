@@ -105,19 +105,22 @@ public class lee_json {
                 //Agrega al arbol si no le dan el barrio pero si el distrito
                if ( !"".equals(distrito) && "".equals(barrio) ){
                    Nodo cantonAux = new Nodo(canton, 0);
+                   cantonAux = raiz.agregarHijo(raiz, cantonAux.getNombre(), 0);
                    cantonAux.agregarHijo(cantonAux, distrito, capacidad);
-                   arbolAux.insertarSensor(raiz, cantonAux, raiz);
                    count = 0;
                    numSensors--;
                    
                }
                //Agrega al arbol si le dan el barrio
                if (!"".equals(barrio)){
+                   
                    Nodo cantonAux = new Nodo(canton, 0);
+                   cantonAux = raiz.agregarHijo(raiz, cantonAux.getNombre(), 0);
                    Nodo distritoAux = cantonAux.agregarHijo(cantonAux, distrito, 0);
                    distritoAux.agregarHijo(distritoAux, barrio, capacidad);
                    
-                   arbolAux.insertarSensor(raiz, cantonAux , raiz);
+                   //System.out.println(distritoAux.getNumHijos());
+                   //arbolAux.insertarSensor(raiz, cantonAux , raiz);
 
                    count = 0;
                    numSensors--;
