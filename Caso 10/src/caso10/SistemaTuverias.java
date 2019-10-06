@@ -28,6 +28,8 @@ import javax.swing.tree.TreePath;
 public class SistemaTuverias extends JFrame {
     private Arbol arbolSistema;
     private DefaultTreeModel modelo;
+    private DefaultMutableTreeNode hijo;
+    private DefaultMutableTreeNode nieto;
     public SistemaTuverias(){
     }
     // Creación de los datos para el JTree. Un padre, con hijo1 e hijo2. hijo1 tiene
@@ -35,6 +37,7 @@ public class SistemaTuverias extends JFrame {
     public void verTree(Arbol tree){
             //System.out.println(tree.getRaiz().getConsumo());
             arbolSistema = tree;
+            
 		DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(tree.getRaiz().getNombre());
                 modelo = new DefaultTreeModel(raiz);
                 
@@ -129,7 +132,8 @@ tree.addMouseListener(ml);*/
             Nodo[] aux =  pNodo.getHijos();
         for (int sensorActual = 0; sensorActual < pNodo.getNumHijos(); sensorActual++){
             //se inicia lo mismo con los hijos
-            DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(aux[sensorActual].getNombre());
+            System.out.println("canton num huji"+aux[sensorActual].getNumHijos());
+             hijo = new DefaultMutableTreeNode(aux[sensorActual].getNombre());
             modelo.insertNodeInto(hijo, raiz, sensorActual);
             agregarNietos(hijo, aux[sensorActual], aux[sensorActual].getHijos(), sensorActual);
            
@@ -139,20 +143,16 @@ tree.addMouseListener(ml);*/
         public void agregarNietos(DefaultMutableTreeNode pPadre,Nodo padre,Nodo[] hermanos,int numeroPadre){
             
             for (int sensorActual = 0; sensorActual < padre.getNumHijos(); sensorActual++){
-                System.out.println("aaaa");
+                
             //se inicia lo mismo con los hijos
             
-            DefaultMutableTreeNode nieto = new DefaultMutableTreeNode(hermanos[sensorActual].getNombre());
-            modelo.insertNodeInto(nieto, pPadre, numeroPadre);
-            agregarNietos2(nieto, hermanos[sensorActual], hermanos[sensorActual].getHijos(), numeroPadre);
-            }
-        }
-        public void agregarNietos2(DefaultMutableTreeNode hijo,Nodo padre,Nodo[] hermanos,int numeroPadre){
-            for (int sensorActual = 0; sensorActual < padre.getNumHijos(); sensorActual++){
-            //se inicia lo mismo con los hijos
-            DefaultMutableTreeNode nieto2 = new DefaultMutableTreeNode(hermanos[sensorActual].getNombre());
-            modelo.insertNodeInto(nieto2, hijo, numeroPadre);
-            agregarNietos2(nieto2, hermanos[sensorActual], hermanos[sensorActual].getHijos(), sensorActual);
+            nieto = new DefaultMutableTreeNode(hermanos[sensorActual].getNombre());
+            System.out.println("aaaa"+hermanos[sensorActual].getNombre());
+            System.out.println("aaaa"+ numeroPadre);
+            modelo.insertNodeInto(nieto, hijo, 0);
+            System.out.println("aaaa"+ numeroPadre);
+            
+            agregarNietos(nieto, hermanos[sensorActual], hermanos[sensorActual].getHijos(), numeroPadre);
             }
         }
 }

@@ -37,8 +37,8 @@ public class Principal {
         tuverias.insertarSensor(raiz, "Pere55z", 19.00, "San Antonio");
         tuverias.insertarSensor(raiz, "Perey", 19.00, "Pery");
         tuverias.insertarSensor(raiz, "San perezo", 15.00, raiz.getNombre());*/
-        Nodo raiz = tuverias.getRaiz();
-        tuverias.verHijos(raiz);
+        //Nodo raiz = tuverias.getRaiz();
+        //tuverias.verHijos(raiz);
         SistemaTuverias Arbol = new SistemaTuverias();
         Arbol.verTree(tuverias);
         
