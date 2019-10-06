@@ -33,13 +33,13 @@ public class Nodo {
             hijosTemporal[copHijo] = hijos[copHijo];
         }
     }
-    public void agregarHijo(Nodo pPadre,String nombreHijo, double consumoHijo){
+    public Nodo agregarHijo(Nodo pPadre,String nombreHijo, double consumoHijo){
         pPadre.copiarHijos();
         Nodo auxHijo = new Nodo(nombreHijo, consumoHijo);
         pPadre.hijosTemporal[pPadre.numHijos] = auxHijo;
         pPadre.hijos = pPadre.hijosTemporal;
         pPadre.numHijos++;
-        
+        return auxHijo;
 
 // this(consumo);//invoca la variable valor del constructor
      //   this.hermanos[numHermanos] = hermano;

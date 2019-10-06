@@ -28,8 +28,21 @@ public class Principal {
     }*/
     public static void main(String args[]) throws java.io.IOException {
         Arbol tuverias = new Arbol();
-       lee_json gson = new lee_json();
-       gson.leer(tuverias);
+        lee_json gson = new lee_json();
+        gson.leer(tuverias);
+        /*Nodo raiz = tuverias.insertarRaiz("Planta", 50000.00);
+        tuverias.insertarSensor(raiz, "San Antonio", 15.00, raiz.getNombre());
+        tuverias.insertarSensor(raiz, "Perez", 19.00, "San Antonio");
+        tuverias.insertarSensor(raiz, "Pery", 19.00, "San Antonio");
+        tuverias.insertarSensor(raiz, "Pere55z", 19.00, "San Antonio");
+        tuverias.insertarSensor(raiz, "Perey", 19.00, "Pery");
+        tuverias.insertarSensor(raiz, "San perezo", 15.00, raiz.getNombre());*/
+        Nodo raiz = tuverias.getRaiz();
+        tuverias.verHijos(raiz);
+        SistemaTuverias Arbol = new SistemaTuverias();
+        Arbol.verTree(tuverias);
+        
+       
     //   JsonParser parser = new JsonParser();
      //   FileReader fr = new FileReader("sensores.json");
       //  JsonElement datos = parser.parse(fr);

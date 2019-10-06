@@ -5,7 +5,6 @@ package caso10;
  * and open the template in the editor.
  */
 import caso10.Nodo;
-import java.io.IOException;
 
 
 
@@ -26,6 +25,7 @@ public class Arbol {
     }
     public void verHijos(Nodo pNodo){
         //Se iniciaa con los padre
+        pNodo.verNodo();
         Nodo[] aux = pNodo.getHijos();
         for (int sensorActual = 0; sensorActual < pNodo.getNumHijos(); sensorActual++){
             aux[sensorActual].verNodo();
@@ -35,12 +35,13 @@ public class Arbol {
         }
 
     }
+    
 
     public void insertarSensor(Nodo pNodo, String pNombre,double pConsumo , String padre){
         //Nodo newSensor = new Nodo(pNombre , pConsumo);
 
         //Si el padre es la raiz
-        if(pNodo.getNombre().equals(padre)){
+        if(pNodo.getNombre().equals(raiz.getNombre())){
             pNodo.agregarHijo(pNodo, pNombre, pConsumo);
         }else{
             //si el padre es alguno de los hijos
@@ -56,5 +57,30 @@ public class Arbol {
 
         }
     }
+    public void insertarSensor(Nodo pNodo,Nodo nodoaInsertar, Nodo inicia){
+        //Nodo newSensor = new Nodo(pNombre , pConsumo);
+
+        //Si el padre es la raiz
+        if(pNodo.getNombre().equals(raiz.getNombre())){
+            pNodo.agregarHijo(pNodo, nodoaInsertar.getNombre(), nodoaInsertar.getConsumo());
+        }else{
+            //si el padre es alguno de los hijos
+                                                                    System.out.println("bbb");
+            for (int hijo = 0; hijo < inicia.getNumHijos(); hijo++){
+                if(inicia.getHijos()[hijo].getNombre().equals(pNodo.getNombre())){
+                    //se coloca el hijo en el nodo
+                    pNodo.getHijos()[hijo].agregarHijo(pNodo, nodoaInsertar.getNombre(), nodoaInsertar.getConsumo());
+                }else{
+                    //busca el padre en los hijos del nodo
+                    insertarSensor(pNodo, nodoaInsertar, inicia.getHijos()[hijo]);
+                }
+            }
+
+        }
+    }
+    public Nodo getRaiz(){
+    return raiz;
+    }
+    
  
 }
