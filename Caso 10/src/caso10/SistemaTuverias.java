@@ -152,6 +152,21 @@ tree.addMouseListener(ml);*/
             modelo.insertNodeInto(nieto, hijo, 0);
             System.out.println("aaaa"+ numeroPadre);
             
+            agregarNietos2(nieto, hermanos[sensorActual], hermanos[sensorActual].getHijos(), numeroPadre);
+            }
+        }
+        public void agregarNietos2(DefaultMutableTreeNode pPadre,Nodo padre,Nodo[] hermanos,int numeroPadre){
+            
+            for (int sensorActual = 0; sensorActual < padre.getNumHijos(); sensorActual++){
+                
+            //se inicia lo mismo con los hijos
+            
+            DefaultMutableTreeNode nieto1 = new DefaultMutableTreeNode(hermanos[sensorActual].getNombre());
+            System.out.println("aaaa"+hermanos[sensorActual].getNombre());
+            System.out.println("aaaa"+ numeroPadre);
+            modelo.insertNodeInto(nieto1, nieto, 0);
+            System.out.println("aaaa"+ numeroPadre);
+            
             agregarNietos(nieto, hermanos[sensorActual], hermanos[sensorActual].getHijos(), numeroPadre);
             }
         }
