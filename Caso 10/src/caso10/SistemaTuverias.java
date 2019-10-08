@@ -5,20 +5,22 @@
  */
 package caso10;
 
+
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.JFrame;
 import javax.swing.JTree;
 import javax.swing.WindowConstants;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 /**
@@ -27,88 +29,117 @@ import javax.swing.tree.TreePath;
  */
 public class SistemaTuverias extends JFrame {
     private Arbol arbolSistema;
+    private JTree interfaz;
     private DefaultTreeModel modelo;
     private DefaultMutableTreeNode hijo;
     private DefaultMutableTreeNode nieto;
+    private TreeNode nodoRaiz;
+    private DefaultTreeModel model;
     public SistemaTuverias(){
     }
-    // Creación de los datos para el JTree. Un padre, con hijo1 e hijo2. hijo1 tiene
-		// ademas un nieto.
+    public void expandAll() {
+        int row = 0;
+        while (row < interfaz.getRowCount()) {
+          interfaz.expandRow(row);
+          row++;
+        }
+    }
+    // Creación de los datos para el JTree. Un padre, con hijos y nietos.
     public void verTree(Arbol tree){
             //System.out.println(tree.getRaiz().getConsumo());
             arbolSistema = tree;
             
 		DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(tree.getRaiz().getNombre());
+                nodoRaiz = raiz;
                 modelo = new DefaultTreeModel(raiz);
-                
+                model = modelo;
                 agregarHijos(raiz);
-        
-                /*
-		DefaultMutableTreeNode hijo1 = new DefaultMutableTreeNode("dd");
-		DefaultMutableTreeNode hijo2 = new DefaultMutableTreeNode("hijo2");
-		DefaultMutableTreeNode nieto1 = new DefaultMutableTreeNode("mexico");
-                DefaultMutableTreeNode sensor = new DefaultMutableTreeNode("Alajuela");
-                DefaultMutableTreeNode sensor1= new DefaultMutableTreeNode("perez");
-                DefaultMutableTreeNode sensor2 = new DefaultMutableTreeNode("sa mano");
-                DefaultMutableTreeNode sensor3 = new DefaultMutableTreeNode("mama");
-		
-		modelo.insertNodeInto(hijo1, raiz, 0);
-		modelo.insertNodeInto(hijo2, raiz, 1);
-		modelo.insertNodeInto(nieto1, hijo1, 0);
-                modelo.insertNodeInto(sensor, nieto1, 0);
-                modelo.insertNodeInto(sensor1, sensor, 0);
-                modelo.insertNodeInto(sensor2, sensor, 0);
-                modelo.insertNodeInto(sensor3, sensor, 0);*/
-		
-		// Creacion y visualizacion de la ventana
-		JFrame v = new JFrame("Sistema de tuverias");
+		JFrame ventana = new JFrame("Sistema de tuverias");
 		JTree arbol = new JTree(modelo);
+                interfaz = arbol;
              
-		v.getContentPane().add(arbol);
+		ventana.getContentPane().add(arbol);
                 DefaultTreeCellRenderer render= (DefaultTreeCellRenderer)arbol.getCellRenderer();
                 render.setLeafIcon(new ImageIcon("Tuveria.png"));
                 render.setOpenIcon(new ImageIcon("Tuveria.png"));
                 render.setClosedIcon(new ImageIcon("Tuveria.png"));
-		 //  v.setSize(900, 300);
-                //arbol.setSize(900, 300);
+               //Expandimos el arbol
+                int row = 0;
+                while (row < arbol.getRowCount()) {
+                arbol.expandRow(row);
+                row++;
+                }
                 
-                v.pack();
-		v.setVisible(true);
-		v.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-                v.setSize(new Dimension(1190, 650));
+                ventana.setResizable(false);
+                ventana.pack();
+		ventana.setVisible(true);
+		ventana.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                ventana.setSize(new Dimension(1190, 650));
                 arbol.setSize(new Dimension(1190, 650));
-		/*
-		// Nos suscribimos a la seleccion de un nodo en el arbol.
-		arbol.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {
+                
+	}
+        //Agrega a la interfaz si el nodo ess hijo de la interfaz
+        public void agregarHijos(DefaultMutableTreeNode raiz){                
+            Nodo pNodo = arbolSistema.getRaiz();
+            Nodo[] aux =  pNodo.getHijos();
+        for (int sensorActual = 0; sensorActual < pNodo.getNumHijos(); sensorActual++){
+            //se inicia lo mismo con los hijos
+             hijo = new DefaultMutableTreeNode(aux[sensorActual].getNombre());
+            modelo.insertNodeInto(hijo, raiz, sensorActual);
+            agregarNietos(hijo, aux[sensorActual], aux[sensorActual].getHijos(), sensorActual);
+           
+
+        }
+        }
+        //Agrega a la interfaz si el nodo padre es un hijo de los hijos de la raiz
+        public void agregarNietos(DefaultMutableTreeNode pPadre,Nodo padre,Nodo[] hermanos,int numeroPadre){
+            
+            for (int sensorActual = 0; sensorActual < padre.getNumHijos(); sensorActual++){
+                
+            //se inicia lo mismo con los hijos
+            
+            nieto = new DefaultMutableTreeNode(hermanos[sensorActual].getNombre());
+  
+            modelo.insertNodeInto(nieto, hijo, 0);
+  
+            
+            agregarNietos2(nieto, hermanos[sensorActual], hermanos[sensorActual].getHijos(), numeroPadre);
+            }
+        }
+        //Agrega a la interfaz si el nod padre esta en los nietos de los hijos de la raiz
+        public void agregarNietos2(DefaultMutableTreeNode pPadre,Nodo padre,Nodo[] hermanos,int numeroPadre){
+            
+            for (int sensorActual = 0; sensorActual < padre.getNumHijos(); sensorActual++){  
+            DefaultMutableTreeNode nieto1 = new DefaultMutableTreeNode(hermanos[sensorActual].getNombre());
+            modelo.insertNodeInto(nieto1, nieto, 0);
+            agregarNietos2(nieto, hermanos[sensorActual], hermanos[sensorActual].getHijos(), numeroPadre);
+            }
+        }
+        public void seleccion(JTree arbol, SistemaTuverias systTree){
+        		
+            // Nos suscribimos a la seleccion de un nodo en el arbol.
+            arbol.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {
 		
-			public void valueChanged(TreeSelectionEvent e) {
+		public void valueChanged(TreeSelectionEvent e) {
 				
-				// Obtenemos y escribimos en pantalla  el path seleccionado
-				TreePath path = e.getPath();
-				Object [] nodos = path.getPath();
-				System.out.print("Path seleccionado: ");
-				for (Object nodo: nodos)
-					System.out.print (nodo.toString() + " | ");
-				System.out.println("");
+                    // Obtenemos y escribimos en pantalla  el path seleccionado
+                    TreePath path = e.getPath();
+                    Object [] nodos = path.getPath();
 				
-				// Mirando el ultimo nodo del path, sabemos qué nodo en concreto
-				// se ha seleccionado.
-				DefaultMutableTreeNode ultimoNodo = 
-					(DefaultMutableTreeNode)nodos[nodos.length-1];
-				
-				// Por ejemplo, para ver si se ha seleccionado el "hijo1"...
-				if (ultimoNodo.getUserObject().equals("hijo1"))
-				{
-					// Necesitamos el modeloSeleccion para saber si "hijo1" se ha
-					// seleccionado o deseleccionado.
-					DefaultTreeSelectionModel modeloSeleccion = 
-						(DefaultTreeSelectionModel)e.getSource();
-					if (modeloSeleccion.isPathSelected(path))
-						System.out.println("Has seleccionado hijo 1");
-					else
-						System.out.println("Has deseleccionado hijo 1");
-				}
-			}
+                        // Mirando el ultimo nodo del path, sabemos qué nodo en concreto se ha seleccionado
+			DefaultMutableTreeNode ultimoNodo = (DefaultMutableTreeNode)nodos[nodos.length-1];
+                        new GestionSensores(ultimoNodo,systTree,interfaz,interfaz.getSelectionPath(), model, arbolSistema).setVisible(true);
+			// Por ejemplo, para ver si se ha seleccionado el "hijo1"...
+			if (ultimoNodo.getUserObject().equals("hijo1")){
+                            // Necesitamos el modeloSeleccion para saber si "hijo1" se ha
+                            // seleccionado o deseleccionado.
+                            DefaultTreeSelectionModel modeloSeleccion = (DefaultTreeSelectionModel)e.getSource();
+                            if (modeloSeleccion.isPathSelected(path))
+                                System.out.println("Has seleccionado hijo 1");
+                            else
+                                System.out.println("Has deseleccionado hijo 1");
+			} 
+		}
 		
 		});
                 JTree tree = arbol;
@@ -118,56 +149,16 @@ public class SistemaTuverias extends JFrame {
                         // Se obtiene el path para esa fila. Con el path podemos obtener
                         // los nodos.
                         TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
-                        Object nodo = selPath.getLastPathComponent();
-
-                        //...
+                  
                         
                     }
-};
-tree.addMouseListener(ml);*/
-	}
-        
-        public void agregarHijos(DefaultMutableTreeNode raiz){                
-            Nodo pNodo = arbolSistema.getRaiz();
-            Nodo[] aux =  pNodo.getHijos();
-        for (int sensorActual = 0; sensorActual < pNodo.getNumHijos(); sensorActual++){
-            //se inicia lo mismo con los hijos
-            System.out.println("canton num huji"+aux[sensorActual].getNumHijos());
-             hijo = new DefaultMutableTreeNode(aux[sensorActual].getNombre());
-            modelo.insertNodeInto(hijo, raiz, sensorActual);
-            agregarNietos(hijo, aux[sensorActual], aux[sensorActual].getHijos(), sensorActual);
-           
-
+                };
+                tree.addMouseListener(ml);
+                }
+        public JTree getArbol(){
+            return interfaz;
         }
-        }
-        public void agregarNietos(DefaultMutableTreeNode pPadre,Nodo padre,Nodo[] hermanos,int numeroPadre){
-            
-            for (int sensorActual = 0; sensorActual < padre.getNumHijos(); sensorActual++){
-                
-            //se inicia lo mismo con los hijos
-            
-            nieto = new DefaultMutableTreeNode(hermanos[sensorActual].getNombre());
-            System.out.println("aaaa"+hermanos[sensorActual].getNombre());
-            System.out.println("aaaa"+ numeroPadre);
-            modelo.insertNodeInto(nieto, hijo, 0);
-            System.out.println("aaaa"+ numeroPadre);
-            
-            agregarNietos2(nieto, hermanos[sensorActual], hermanos[sensorActual].getHijos(), numeroPadre);
-            }
-        }
-        public void agregarNietos2(DefaultMutableTreeNode pPadre,Nodo padre,Nodo[] hermanos,int numeroPadre){
-            
-            for (int sensorActual = 0; sensorActual < padre.getNumHijos(); sensorActual++){
-                
-            //se inicia lo mismo con los hijos
-            
-            DefaultMutableTreeNode nieto1 = new DefaultMutableTreeNode(hermanos[sensorActual].getNombre());
-            System.out.println("aaaa"+hermanos[sensorActual].getNombre());
-            System.out.println("aaaa"+ numeroPadre);
-            modelo.insertNodeInto(nieto1, nieto, 0);
-            System.out.println("aaaa"+ numeroPadre);
-            
-            agregarNietos(nieto, hermanos[sensorActual], hermanos[sensorActual].getHijos(), numeroPadre);
-            }
+        public TreeNode getRaiz(){
+            return nodoRaiz;
         }
 }

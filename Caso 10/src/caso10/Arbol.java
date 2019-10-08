@@ -79,7 +79,36 @@ public class Arbol {
         }
     }
     public Nodo getRaiz(){
-    return raiz;
+        return raiz;
+    }
+    public void agregarNodo(String nombrePadre,String nombreHijo, double consumoHijo){
+        Nodo [] lista = raiz.getHijos();
+        for(int hijo = 0; hijo < raiz.getNumHijos(); hijo++){
+            if (lista[hijo].getNombre().equals(nombrePadre)){
+                lista[hijo].agregarHijo(lista[hijo], nombreHijo, consumoHijo);
+              
+            }
+            Nodo[] listaAux = lista[hijo].getHijos();
+            for (int hij = 0; hij < lista[hijo].getNumHijos(); hij++){
+                agregarNodo(listaAux, nombrePadre,  nombreHijo,  consumoHijo);
+            }
+        }
+        if (nombrePadre.equals(raiz.getNombre())){
+            raiz.agregarHijo(raiz, nombreHijo, consumoHijo);
+        }
+    }
+    public void agregarNodo(Nodo[] comienza,String nombrePadre,String nombreHijo, double consumoHijo){
+        Nodo [] lista = comienza;
+        for(int hijo = 0; hijo < lista.length; hijo++){
+            if (lista[hijo].getNombre().equals(nombrePadre)){
+                lista[hijo].agregarHijo(lista[hijo], nombreHijo, consumoHijo);
+             
+            }
+            Nodo[] listaAux = lista[hijo].getHijos();
+            for (int hij = 0; hij < lista[hijo].getNumHijos(); hij++){
+                agregarNodo(listaAux, nombrePadre, nombreHijo, consumoHijo);
+            }
+        }
     }
     
  

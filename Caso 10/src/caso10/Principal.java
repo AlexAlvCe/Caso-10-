@@ -41,6 +41,7 @@ public class Principal {
         //tuverias.verHijos(raiz);
         SistemaTuverias Arbol = new SistemaTuverias();
         Arbol.verTree(tuverias);
+        Arbol.seleccion(Arbol.getArbol(),Arbol);
         
        
     //   JsonParser parser = new JsonParser();
