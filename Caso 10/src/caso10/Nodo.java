@@ -5,6 +5,8 @@
  */
 package caso10;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author sande
@@ -13,7 +15,9 @@ public class Nodo {
     private double consumo; //para almacenar cualquier valor
     private String Nombre;
     private Nodo padre;//variable nodo padre
-    private Nodo[] hijos;
+    ArrayList<String> nombreArrayList = new ArrayList<String>();
+    ArrayList<Nodo> hijos = new ArrayList<Nodo>();
+    //private Nodo[] hijos;
     private Nodo[] hijosTemporal;
     private int numHijos=0;
     //Creando los constructores
@@ -22,29 +26,24 @@ public class Nodo {
         this. Nombre = pNombre;
         this.numHijos = 0;
     }
-     
-    
-    public void copiarHijos(){
-        //Aumenta en 1 el numero de hijos que puede tener el padre en su arreglo
-        hijosTemporal = new Nodo[numHijos + 1];
-        for (int copHijo = 0; copHijo < this.numHijos; copHijo++){
-            hijosTemporal[copHijo] = hijos[copHijo];
-        }
-    }
+
     public Nodo agregarHijo(Nodo pPadre,String nombreHijo, double consumoHijo){
-        pPadre.copiarHijos();
+       // pPadre.copiarHijos();
         Nodo auxHijo = new Nodo(nombreHijo, consumoHijo);
         auxHijo.padre = pPadre;
-        pPadre.hijosTemporal[pPadre.numHijos] = auxHijo;
-        pPadre.hijos = pPadre.hijosTemporal;
+        //pPadre.hijosTemporal[pPadre.numHijos] = auxHijo;
+        pPadre.hijos.add(auxHijo);
         pPadre.numHijos++;
         return auxHijo;
 
     }
- 
+    
     /*
     Creando los metodos get a set para valor,padre e hijo
     */
+    public Nodo getPadre(){
+        return padre;
+    }
    public String getNombre(){
         return this.Nombre;
    }
@@ -61,7 +60,7 @@ public class Nodo {
     public void verNodo(){
         System.out.println(this.Nombre);
     }
-    public Nodo[] getHijos() {
+    public ArrayList<Nodo> getHijos() {
         return hijos;
     }
  
